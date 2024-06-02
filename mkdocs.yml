@@ -1,0 +1,133 @@
+site_name: ITLinux | Wiki
+site_author: Benjamin Martineau
+site_url: http://localhost:8000
+site_description: >-
+  Wiki personnel pour le partage de la connaissance et l'expérience d'un Administrateur DevOps
+
+# Copyright
+copyright: Copyright &copy; 2024 ITLinux
+
+# Configurations
+extra_css:
+  - stylesheets/extra.css
+theme:
+  name: material
+  custom_dir: material/overrides
+  features:
+    - announce.dismiss
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    - content.tooltips
+    - navigation.path
+    - navigation.footer
+    - navigation.expand
+    - navigation.indexes
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep orange
+      accent: deep orange
+      toggle:
+        icon: material/lightbulb
+        name: Eteindre la lumière !  
+
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: red
+      toggle:
+        icon: material/lightbulb-outline
+        name: Allumer la lumière !
+#  font:
+#    text: Poppins
+#    code: Source Code Pro
+  favicon: assets/favicon.png
+  icon:
+    logo: logo
+    tag:
+      linux: simple/linux
+      k8s: simple/kubernetes
+      el8: simple/redhat
+      vagrant: simple/vagrant
+      apache: simple/apache
+      minikube: material/cube
+  language: fr
+
+# Plugins
+plugins:
+  - blog
+  - search:
+      separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+  - minify:
+      minify_html: true
+  - tags
+
+# Additional configuration
+extra:
+  tags:
+    Linux: linux
+    Apache: apache 
+    Enterprise Linux 8: el8
+    Vagrant: vagrant
+    Kubernetes: k8s
+    Minikube: minikube
+  status:
+    new: Recently added
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/itlinuxfr
+    - icon: fontawesome/brands/linkedin
+      link: https://fr.linkedin.com/in/benjamin-m-90b698150
+  consent:
+    title: Cookie consent
+    description: >-
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.
+# Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+# Page tree
+nav:
+  - Accueil: index.md
+  - Linux:
+      - linux/index.md
+      - Cluster EL8 HTTPD: linux/cluster-rhel-httpd.md
+  - Kubernetes:
+      - kubernetes/index.md
+      - Commenter avec minikube: kubernetes/getting-started-minikube.md
+  - Automatisation:
+      - automation/index.md
+  - Réseau: 
+      - network/index.md
+  - Matériel:
+      - hardware/index.md
+  - DevOps:
+      - devops/index.md
