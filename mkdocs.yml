@@ -1,3 +1,5 @@
+# Global Configuration File for Mkdocs Material
+
 site_name: ITLinux | Wiki
 site_author: Benjamin Martineau
 site_url: http://localhost:8000
