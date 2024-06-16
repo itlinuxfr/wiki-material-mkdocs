@@ -20,7 +20,7 @@ Il est bon de savoir que bien des choses sont réalisables avec un ordinateur, u
 
 # Technologies principales
 
-Voici les différents technologies qui seront abordées :
+Voici les différentes technologies qui seront abordées :
 
 - Automatisation
 - Virtualisation
