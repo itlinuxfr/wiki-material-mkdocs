@@ -1,3 +1,3 @@
 # Linux
 
-Ceci est la plus belle page d'accueil du monde !
+Ici on parle Linux et écosystème !

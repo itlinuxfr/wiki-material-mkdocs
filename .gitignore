@@ -1,0 +1,4 @@
+config
+*.tar.gz
+.idea
+.cache

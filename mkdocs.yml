@@ -124,7 +124,7 @@ nav:
       - Cluster EL8 HTTPD: linux/cluster-rhel-httpd.md
   - Kubernetes:
       - kubernetes/index.md
-      - Commenter avec minikube: kubernetes/getting-started-minikube.md
+      - Minikube: kubernetes/minikube/getting-started-minikube.md
   - Automatisation:
       - automation/index.md
   - Réseau: 
