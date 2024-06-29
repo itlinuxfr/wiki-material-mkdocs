@@ -127,9 +127,13 @@ nav:
       - Minikube: kubernetes/minikube/getting-started-minikube.md
   - Automatisation:
       - automation/index.md
-  - Réseau: 
+  - Réseau:
       - network/index.md
   - Matériel:
       - hardware/index.md
   - DevOps:
       - devops/index.md
+  - NAS:
+      - nas/index.md
+      - Scale - k3s: nas/truenas-scale/k3s-cli.md
+      - Scale - 
