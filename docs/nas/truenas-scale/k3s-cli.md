@@ -1,6 +1,7 @@
 ---
 tags:
   - Kubernetes
+  - TrueNAS
 ---
 
 # Introduction

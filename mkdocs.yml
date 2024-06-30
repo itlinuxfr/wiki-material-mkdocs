@@ -3,6 +3,7 @@
 site_name: ITLinux | Wiki
 site_author: Benjamin Martineau
 site_url: http://localhost:8000
+dev_addr: 0.0.0.0
 site_description: >-
   Wiki personnel pour le partage de la connaissance et l'expérience d'un Administrateur DevOps
 
@@ -63,6 +64,7 @@ theme:
       vagrant: simple/vagrant
       apache: simple/apache
       minikube: material/cube
+      truenas: simple/truenas
   language: fr
 
 # Plugins
@@ -83,6 +85,7 @@ extra:
     Vagrant: vagrant
     Kubernetes: k8s
     Minikube: minikube
+    TrueNAS: truenas
   status:
     new: Recently added
   social:
@@ -125,15 +128,14 @@ nav:
   - Kubernetes:
       - kubernetes/index.md
       - Minikube: kubernetes/minikube/getting-started-minikube.md
-  - Automatisation:
-      - automation/index.md
-  - Réseau:
-      - network/index.md
-  - Matériel:
-      - hardware/index.md
-  - DevOps:
-      - devops/index.md
+#  - Automatisation:
+#      - automation/index.md
+#  - Réseau:
+#      - network/index.md
+#  - Matériel:
+#      - hardware/index.md
+#  - DevOps:
+#      - devops/index.md
   - NAS:
       - nas/index.md
-      - Scale - k3s: nas/truenas-scale/k3s-cli.md
-      - Scale - 
+      - TrueNAS Scale | k3s: nas/truenas-scale/k3s-cli.md
