@@ -65,6 +65,7 @@ theme:
       apache: simple/apache
       minikube: material/cube
       truenas: simple/truenas
+      zfs: simple/openzfs
   language: fr
 
 # Plugins
@@ -86,6 +87,7 @@ extra:
     Kubernetes: k8s
     Minikube: minikube
     TrueNAS: truenas
+    ZFS: zfs
   status:
     new: Recently added
   social:
@@ -139,3 +141,4 @@ nav:
   - NAS:
       - nas/index.md
       - TrueNAS Scale | k3s: nas/truenas-scale/k3s-cli.md
+      - TrueNAS Scale | k3s | Storage: nas/truenas-scale/k3s-storage.md
