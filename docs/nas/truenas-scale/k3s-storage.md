@@ -17,7 +17,7 @@ ZFS est un système de fichiers. C'est aussi un gestionnaire de volumes. Cela si
 
 Vous avez peut-être entendu parler d'Oracle ZFS. ZFS a été développé chez Sun Microsystems par Matt Ahrens et Jeff Bonwick. Il a été open-source et porté sur d'autres systèmes d'exploitation. Après avoir acquis Sun, Oracle a pris la décision inhabituelle de fermer le développement interne du système d'exploitation OpenSolaris, y compris ZFS. Le code existant était toujours open-source, donc la plupart de l'équipe ZFS a quitté Oracle et le projet OpenZFS a été créé pour continuer le développement open-source de ZFS.
 
-## Kubernetes StorageClass
+## Classe de stockage
 
 Dans Kubernetes, on utilise des **StorageClass** ou **Classe de Stockage** en bon français. Cet objet permet de définir les informations nécessaire pour *réclamer* un espace de stockage. Il existe d'autre classe de stockage en fonction des fournisseurs, notamelent **Trident** pour NetAPP ou encore **Portworx** par PureStorage et d'autre encore.
 
@@ -70,7 +70,7 @@ Cette classe de stockage définit le pool ZFS configuré dans TrueNAS Scale pour
 
 Permet de définir le pool ZFS pour tous les volumes Kube
 
-## Kubernetes Secret
+## Les secrets
 
 Pour communiquer avec notre TrueNAS et ZFS, il faut que Kubernetes est accès à l'API avec un compte et un mot de passe. 
 
@@ -111,7 +111,7 @@ echo "une-très-grande-chaine-de-caractères-en-base64" | base64 -d
 
 Et voilà !
 
-## Kubernetes CRD
+## Les Customs Resources Definitions
 
 On peut afficher la liste de CRD pour OpenEBS :
 
@@ -181,14 +181,17 @@ Pools:
 Events:  <none>
 ```
 
-## Kubernetes volumeMounts
+## Utiliser les volumes
 
 Comment le volume créé dans un pool ZFS est ensuite monté dans un conteneur ? 
-A ma grande surprise, je pensais qu'un objet de type PVC/PV était créé.. et bien non !
 
-Le montage d'un volume type **ix-application** se fait via le mode **hostPath**, c'est à dire que le volume est monté depuis un chemin local sur notre NAS.
+Le montage d'un volume type **ix-application** se fait via le mode **hostPath**, **PVC** ou **NFS** en fonction de l'application et de sa Chart.
 
 Quand le volume est créé dynamiquement par la classe de stockage lors de l'installation d'une nouvelle application, le backend zfs créé un nouveau volume et le monte sur le NAS lui même. On peut afficher les volumes déjà montés :
+
+### Exemple avec hostPath
+
+Type : **hostPath**
 
 ```bash
 # admin@scale:~$ df -h |grep -i "ix-applications" |awk '{print $1}'
@@ -230,4 +233,110 @@ Ensuite une déclartion dans le type de déploiement Kubernetes est ajouté pour
 ...
 ```
 
-Comme on peut le voir ici, on ne passe par la déclaration d'un **PersistentVolumeClaim** mais par **hostPath**, ce qui veut dire que lors de l'installation de l'application via TrueChart, il doit y avoir un mécanisme qui vient créer les volumes via la classe de stockage mais qui ne créé par d'objet PV et PVC.
+Comme on peut le voir dans cet exemple, on ne passe par la déclaration d'un **PersistentVolumeClaim** mais par **hostPath**. En fonction du type d'application et du type de stockage nécessaire, la méthode de provisionnement de stockage diffère.
+
+### Exemple avec un PVC
+
+Ici, j'ai déployé une application via Chart pour qbittorrent, celle-ci nécessite du stockage pour garder sa configuration persistante au redémarrage.
+
+Voici la composition du déploiement :
+
+```bash
+...
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: qbittorrent-config
+...
+```
+
+Ensuite, on peut afficher le PVC associé :
+
+```bash
+# sudo k3s kubectl get pvc qbittorrent-config -n ix-qbittorrent
+
+NAME                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS            AGE
+qbittorrent-config   Bound    pvc-c58380a0-25d9-4080-a18f-e13b150edd13   5Gi        RWO            openebs-zfspv-default   130m
+```
+
+Voici sa composition :
+
+```bash
+#sudo k3s kubectl get pv -n ix-qbittorrent pvc-c58380a0-25d9-4080-a18f-e13b150edd13 --output yaml
+...
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 5Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: qbittorrent-config
+    namespace: ix-qbittorrent
+  csi:
+    driver: zfs.csi.openebs.io
+    fsType: zfs
+    volumeAttributes:
+      openebs.io/cas-type: localpv-zfs
+      openebs.io/poolname: NAS79_VOL_MIR_02/ix-applications/default_volumes
+      storage.kubernetes.io/csiProvisionerIdentity: 1719863288029-693-zfs.csi.openebs.io
+    volumeHandle: pvc-c58380a0-25d9-4080-a18f-e13b150edd13
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: openebs.io/nodeid
+          operator: In
+          values:
+          - ix-truenas
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: openebs-zfspv-default
+  volumeMode: Filesystem
+...
+```
+On peut aussi utiliser une ressource (CRD) de OpenEBS pour afficher le volume : 
+
+```bash
+# sudo k3s kubectl get zv -n openebs
+
+NAME                                       ZPOOL                                              NODEID       SIZE         STATUS   FILESYSTEM   AGE
+pvc-c58380a0-25d9-4080-a18f-e13b150edd13   NAS79_VOL_MIR_02/ix-applications/default_volumes   ix-truenas   5368709120   Ready    zfs          133m
+```
+
+```bash
+# sudo k3s kubectl get zv -n openebs pvc-c58380a0-25d9-4080-a18f-e13b150edd13 --output yaml
+
+piVersion: zfs.openebs.io/v1
+kind: ZFSVolume
+metadata:
+  creationTimestamp: "2024-07-02T16:45:58Z"
+  finalizers:
+  - zfs.openebs.io/finalizer
+  generation: 2
+  labels:
+    kubernetes.io/nodename: ix-truenas
+  name: pvc-c58380a0-25d9-4080-a18f-e13b150edd13
+  namespace: openebs
+  resourceVersion: "30837917"
+  uid: 2716d6ac-7607-4dad-b51d-a095bbdf810d
+spec:
+  capacity: "5368709120"
+  fsType: zfs
+  ownerNodeID: ix-truenas
+  poolName: NAS79_VOL_MIR_02/ix-applications/default_volumes
+  shared: "yes"
+  volumeType: DATASET
+status:
+  state: Ready
+```
+On peut vérifier le montage depuis le pod :
+
+```bash
+#sudo k3s kubectl -n ix-qbittorrent exec -it qbittorrent-6dbbbf9787-pl9q6 -- bash
+
+bittorrent-6dbbbf9787-pl9q6:/config$ df -h /config
+Filesystem                Size      Used Available Use% Mounted on
+NAS79_VOL_MIR_02/ix-applications/default_volumes/pvc-c58380a0-25d9-4080-a18f-e13b150edd13
+                          5.0G      5.6M      5.0G   0% /config
+```

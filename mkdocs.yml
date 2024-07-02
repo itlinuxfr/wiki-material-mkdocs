@@ -66,6 +66,7 @@ theme:
       minikube: material/cube
       truenas: simple/truenas
       zfs: simple/openzfs
+      aws: material/aws
   language: fr
 
 # Plugins
@@ -88,6 +89,7 @@ extra:
     Minikube: minikube
     TrueNAS: truenas
     ZFS: zfs
+    AWS: aws
   status:
     new: Recently added
   social:
@@ -142,3 +144,4 @@ nav:
       - nas/index.md
       - TrueNAS Scale | k3s: nas/truenas-scale/k3s-cli.md
       - TrueNAS Scale | k3s | Storage: nas/truenas-scale/k3s-storage.md
+      - TrueNAS Scale | aws | Sauvegarde: nas/truenas-scale/aws-backup.md
