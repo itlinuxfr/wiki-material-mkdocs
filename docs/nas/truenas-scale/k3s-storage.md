@@ -35,7 +35,7 @@ openebs-zfspv-default (default)   zfs.csi.openebs.io   Delete          Immediate
 
 On peut afficher au format **yaml** la classe de stockage pour avoir plus d'infos :
 
-```bash
+```yaml
 apiVersion: v1
 items:
 - allowVolumeExpansion: true
@@ -86,7 +86,7 @@ ix-truenas.node-password.k3s   Opaque              1      228d
 
 On peut obtenir le mot de passe en regardant de plus près le secret :
 
-```bash
+```yaml
 apiVersion: v1
 data:
   hash: "une-très-grande-chaine-de-caractères-en-base64"
@@ -134,7 +134,7 @@ volumesnapshots.snapshot.storage.k8s.io          2023-11-14T18:38:54Z
 
 Si on regarde la ressource **zfsnodes**, on pourra voir notre NAS connecté et ses pools :
 
-```bash
+```yaml
 # sudo k3s kubectl describe zfsnodes -A
 Name:         ix-truenas
 Namespace:    openebs
@@ -217,7 +217,7 @@ NAS79_VOL_MIR_02/ix-applications/releases/grafana/volumes/ix_volumes/data
 
 Ensuite une déclartion dans le type de déploiement Kubernetes est ajouté pour monter le volume, exemple avec une application Grafana basique :
 
-```bash
+```yaml
 ...
         volumeMounts:
         - mountPath: /mnt/directories/data
@@ -241,7 +241,7 @@ Ici, j'ai déployé une application via Chart pour qbittorrent, celle-ci nécess
 
 Voici la composition du déploiement :
 
-```bash
+```yaml
 ...
       volumes:
       - name: config
@@ -261,7 +261,7 @@ qbittorrent-config   Bound    pvc-c58380a0-25d9-4080-a18f-e13b150edd13   5Gi    
 
 Voici sa composition :
 
-```bash
+```yaml
 #sudo k3s kubectl get pv -n ix-qbittorrent pvc-c58380a0-25d9-4080-a18f-e13b150edd13 --output yaml
 ...
 spec:
@@ -304,7 +304,7 @@ NAME                                       ZPOOL                                
 pvc-c58380a0-25d9-4080-a18f-e13b150edd13   NAS79_VOL_MIR_02/ix-applications/default_volumes   ix-truenas   5368709120   Ready    zfs          133m
 ```
 
-```bash
+```yaml
 # sudo k3s kubectl get zv -n openebs pvc-c58380a0-25d9-4080-a18f-e13b150edd13 --output yaml
 
 piVersion: zfs.openebs.io/v1
