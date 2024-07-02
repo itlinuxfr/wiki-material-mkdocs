@@ -47,7 +47,7 @@ theme:
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: black
-      accent: red
+      accent: white
       toggle:
         icon: material/lightbulb-outline
         name: Allumer la lumière !
