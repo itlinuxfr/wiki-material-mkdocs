@@ -136,6 +136,7 @@ nav:
   - Kubernetes:
       - kubernetes/index.md
       - Minikube: kubernetes/minikube/getting-started-minikube.md
+      - k8s | Briques Internes: kubernetes/k8s-internal-components.md
 #  - Automatisation:
 #      - automation/index.md
 #  - Réseau:
