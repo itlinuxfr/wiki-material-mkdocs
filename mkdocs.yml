@@ -67,6 +67,7 @@ theme:
       truenas: simple/truenas
       zfs: simple/openzfs
       aws: material/aws
+      helm: simple/helm
   language: fr
 
 # Plugins
@@ -90,6 +91,7 @@ extra:
     TrueNAS: truenas
     ZFS: zfs
     AWS: aws
+    Helm: helm
   status:
     new: Recently added
   social:
@@ -135,8 +137,14 @@ nav:
       - Cluster EL8 HTTPD: linux/cluster-rhel-httpd.md
   - Kubernetes:
       - kubernetes/index.md
-      - Minikube: kubernetes/minikube/getting-started-minikube.md
       - k8s | Briques Internes: kubernetes/k8s-internal-components.md
+      - Minikube: 
+          - kubernetes/minikube/index.md
+          - Installation & Configuration: kubernetes/minikube/getting-started-minikube.md
+      - Helm: 
+          - kubernetes/helm/index.md
+          - Installation & Configuration: kubernetes/helm/getting-started-helm.md
+          - Template: kubernetes/helm/template-helm.md
 #  - Automatisation:
 #      - automation/index.md
 #  - Réseau:

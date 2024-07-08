@@ -37,6 +37,8 @@ metrics-server-c59844bb4-9fxrl     1/1     Running   0              8m9s
 storage-provisioner                1/1     Running   6 (11m ago)    30d
 ```
 
+## Composants internes essentiels
+
 ### CoreDNS
 
 CoreDNS est le composant qui gère en interne toute la partie résolution de nom au sein du Cluster Kube.

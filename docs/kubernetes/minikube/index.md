@@ -1,0 +1,3 @@
+# Introduction
+
+Minikube est un outil qui permet de lancer un cluster Kubernetes localement sur votre machine. C'est idéal pour les développeurs qui souhaitent tester ou développer des applications Kubernetes sans avoir besoin de déploiement sur un vrai cluster. Minikube simule un environnement Kubernetes complet sur un PC ou Mac, facilitant l'apprentissage, le développement, et l'expérimentation avec Kubernetes.
