@@ -144,7 +144,12 @@ nav:
       - Helm: 
           - kubernetes/helm/index.md
           - Installation & Configuration: kubernetes/helm/getting-started-helm.md
-          - Template: kubernetes/helm/template-helm.md
+          - Template Helm: kubernetes/helm/template-helm.md
+      - Outils:
+          - kubernetes/tools/index.md
+          - Contextes Kubernetes: kubernetes/tools/k8s-tools.md
+          - k9s: kubernetes/tools/k8s-k9s.md
+          - kubespy: kubernetes/tools/k8s-kubespy.md
 #  - Automatisation:
 #      - automation/index.md
 #  - Réseau:
