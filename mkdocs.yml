@@ -2,8 +2,7 @@
 
 site_name: ITLinux | Wiki
 site_author: Benjamin Martineau
-site_url: http://localhost:8000
-dev_addr: 0.0.0.0
+site_url: https://itlinuxfr.github.io
 site_description: >-
   Wiki personnel pour le partage de la connaissance et l'expérience d'un Administrateur DevOps
 
