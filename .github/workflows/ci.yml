@@ -1,4 +1,4 @@
-name: ci 
+name: Push to Production
 on:
   push:
     branches:
