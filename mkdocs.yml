@@ -133,8 +133,11 @@ markdown_extensions:
 nav:
   - Accueil: index.md
   - Linux:
-      - linux/index.md
+      - Linux: linux/index.md
       - Cluster EL8 HTTPD: linux/cluster-rhel-httpd.md
+      - FreeIPA: 
+          - linux/freeipa/index.md
+          - Installation Cluster: linux/freeipa/freeipa-installation.md
   - Kubernetes:
       - kubernetes/index.md
       - k8s | Briques Internes: kubernetes/k8s-internal-components.md
